@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 
 // Modules
 import { UsersModule } from './shared';
+import { SosModule } from './modules';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { UsersModule } from './shared';
 
         // Modules
         UsersModule,
+        SosModule,
     ],
     controllers: [],
     providers: [],

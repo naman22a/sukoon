@@ -20,4 +20,16 @@ model User {
     role      Role     @default(CITIZEN)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    soss      Sos[]
+}
+
+model Sos {
+    id         Int      @id @default(autoincrement())
+    latitude   Float
+    longitude  Float
+    isResolved Boolean  @default(false)
+    createdAt  DateTime @default(now())
+
+    userId Int
+    User   User @relation(fields: [userId], references: [id])
 }
