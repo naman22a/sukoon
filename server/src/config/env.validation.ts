@@ -31,6 +31,17 @@ export class EnvironmentVariables {
 
     @IsNotEmpty()
     CORS_ORIGIN: string;
+
+    @Matches(
+        /^postgresql:\/\/([^:]+):([^@]+)@([^:\/]+):(\d+)\/([^?]+)\?schema=([^&]+)$/,
+    )
+    DATABASE_URL: string;
+
+    @IsNotEmpty()
+    REDIS_URL: string;
+
+    @IsNotEmpty()
+    SESSION_SECRET: string;
 }
 
 export type ConfigurationType = ConfigType<typeof configuration>;

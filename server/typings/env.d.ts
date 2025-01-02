@@ -6,6 +6,10 @@ declare global {
             CLIENT_URL: string;
             SERVER_URL: string;
             CORS_ORIGIN: string;
+            DATABASE_URL: string;
+            REDIS_URL: string;
+            SESSION_SECRET: string;
+            COOKIE_DOMAIN: string;
         }
     }
 }
