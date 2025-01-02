@@ -1,13 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from '@prisma/client';
+import { excludeUserDetails } from '../../common/utils';
 
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
     @Get()
-    async findUsers(): Promise<User[]> {
-        return await this.usersService.findAll();
+    async findUsers() {
+        const users = await this.usersService.findAll();
+        return users.map((user) => excludeUserDetails(user));
     }
 }
