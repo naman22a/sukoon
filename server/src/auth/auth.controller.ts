@@ -7,7 +7,7 @@ import {
     Res,
     UseGuards,
 } from '@nestjs/common';
-import { LoginDto, RegisterDto } from './types';
+import { LoginAdminDto, LoginDto, RegisterDto } from './types';
 import { Request, Response } from 'express';
 import { OkResponse } from '../common/types';
 import { UsersService } from '../shared';
@@ -102,5 +102,44 @@ export class AuthController {
                 resolve({ ok: true });
             }),
         );
+    }
+
+    @Post('login/admin')
+    async loginAdmin(
+        @Body() body: LoginAdminDto,
+        @Req() req: Request,
+    ): Promise<OkResponse> {
+        const { email, password } = body;
+
+        // check if user exists in database
+        const user = await this.usersService.findOneByEmail(email);
+        if (!user) {
+            return {
+                ok: false,
+                errors: [{ field: 'email', message: 'User not found' }],
+            };
+        }
+
+        // check if password is correct
+        const isMatch = await argon2.verify(user.password, password);
+        if (!isMatch) {
+            return {
+                ok: false,
+                errors: [{ field: 'password', message: 'Incorrect password' }],
+            };
+        }
+
+        // check if user is admin
+        if (user.role !== 'ADMIN') {
+            return {
+                ok: false,
+                errors: [{ field: 'role', message: 'not admin user' }],
+            };
+        }
+
+        // login: create a session
+        req.session.userId = user.id;
+
+        return { ok: true };
     }
 }
