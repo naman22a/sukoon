@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { configuration, validate } from './config';
 import { PrismaModule } from './prisma';
+import { UsersModule } from './shared/users/users.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { PrismaModule } from './prisma';
             validate,
         }),
         PrismaModule,
+        UsersModule,
     ],
     controllers: [],
     providers: [],
