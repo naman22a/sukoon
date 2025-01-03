@@ -17,11 +17,11 @@ export class SosGateway {
         const { userId, latitude, longitude } = JSON.parse(
             payload,
         ) as SosPayload;
-        const sos = await this.sosService.createSos(
-            userId,
-            latitude,
-            longitude,
-        );
-        socket.emit('send_sos', sos);
+
+        // save sos in database
+        await this.sosService.createSos(userId, latitude, longitude);
+
+        // send sos to users nearby in radius of 5 km
+        await this.sosService.notifyNearbyUsers(socket, latitude, longitude);
     }
 }

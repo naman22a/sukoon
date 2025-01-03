@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma';
 import { Sos, Role } from '@prisma/client';
+import { Socket } from 'socket.io';
 
 @Injectable()
 export class SosService {
@@ -11,7 +12,6 @@ export class SosService {
         latitude: number,
         longitude: number,
     ): Promise<Sos> {
-        // 1. Create SOS record in the database
         const sos = await this.prisma.sos.create({
             data: {
                 userId,
@@ -20,24 +20,20 @@ export class SosService {
             },
         });
 
-        // 2. Notify nearby users and police
-        await this.notifyNearbyUsers(latitude, longitude);
-
         return sos;
     }
 
-    private async notifyNearbyUsers(
+    async notifyNearbyUsers(
+        socket: Socket,
         latitude: number,
         longitude: number,
     ): Promise<void> {
-        // Find nearby users (within 5km radius)
         const nearbyUsers = await this.prisma.user.findMany({
             where: {
                 role: { in: [Role.CITIZEN, Role.POLICE] },
             },
         });
 
-        // Logic to calculate distances (Haversine formula or PostgreSQL extension)
         const usersWithinRadius = nearbyUsers.filter((user) => {
             const distance = this.calculateDistance(
                 latitude,
@@ -48,10 +44,8 @@ export class SosService {
             return distance <= 5; // 5 km
         });
 
-        // Notify nearby users (e.g., using WebSocket or push notifications)
         usersWithinRadius.forEach((user) => {
-            // Emit WebSocket event or send notification
-            console.log(`Notify user ${user.id}`);
+            socket.emit('notify_sos', { userId: user.id, latitude, longitude });
         });
     }
 
