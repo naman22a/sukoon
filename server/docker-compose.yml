@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      # ports:
+      # - '5432:5432'
+
+  redis:
+    image: redis
+    container_name: sukoon-redis
+    # ports:
+    # - '6379:6379'
+
+  server:
+    env_file: ".env"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: sukoon-server
+    depends_on:
+      - db
+      - redis
+    ports:
+      - '5000:5000'
