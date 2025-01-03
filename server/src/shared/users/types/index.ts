@@ -4,4 +4,6 @@ export class CreateUserDto {
     role: Role;
     email: string;
     password: string;
+    latitude: number;
+    longitude: number;
 }

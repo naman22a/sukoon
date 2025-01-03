@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import {
+    IsEmail,
+    IsLatitude,
+    IsLongitude,
+    IsNotEmpty,
+    MinLength,
+} from 'class-validator';
 
 export class RegisterDto {
     @IsEmail()
@@ -6,6 +12,12 @@ export class RegisterDto {
 
     @MinLength(6)
     password: string;
+
+    @IsLatitude()
+    latitude: number;
+
+    @IsLongitude()
+    longitude: number;
 }
 
 export class LoginDto {
