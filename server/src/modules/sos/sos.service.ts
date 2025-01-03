@@ -30,7 +30,7 @@ export class SosService {
     ): Promise<void> {
         const nearbyUsers = await this.prisma.user.findMany({
             where: {
-                role: { in: [Role.CITIZEN, Role.POLICE] },
+                role: { in: [Role.CITIZEN] },
             },
         });
 
@@ -70,5 +70,31 @@ export class SosService {
 
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c; // Distance in km
+    }
+
+    async notifyNearbyPolice(
+        socket: Socket,
+        latitude: number,
+        longitude: number,
+    ) {
+        const nearbyPolice = await this.prisma.user.findMany({
+            where: {
+                role: { in: [Role.POLICE] },
+            },
+        });
+
+        const policeWithinRadius = nearbyPolice.filter((user) => {
+            const distance = this.calculateDistance(
+                latitude,
+                longitude,
+                user.latitude,
+                user.longitude,
+            );
+            return distance <= 5; // 5 km
+        });
+
+        policeWithinRadius.forEach((user) => {
+            socket.emit('notify_sos', { userId: user.id, latitude, longitude });
+        });
     }
 }

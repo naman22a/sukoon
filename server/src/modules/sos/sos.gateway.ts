@@ -23,5 +23,8 @@ export class SosGateway {
 
         // send sos to users nearby in radius of 5 km
         await this.sosService.notifyNearbyUsers(socket, latitude, longitude);
+
+        // send sos to police nearby in radius of 5 km
+        await this.sosService.notifyNearbyPolice(socket, latitude, longitude);
     }
 }
