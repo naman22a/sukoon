@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     IsEmail,
     IsLatitude,
@@ -7,23 +8,29 @@ import {
 } from 'class-validator';
 
 export class RegisterDto {
+    @ApiProperty()
     @IsEmail()
     email: string;
 
+    @ApiProperty()
     @MinLength(6)
     password: string;
 
+    @ApiProperty()
     @IsLatitude()
     latitude: number;
 
+    @ApiProperty()
     @IsLongitude()
     longitude: number;
 }
 
 export class LoginDto {
+    @ApiProperty()
     @IsEmail()
     email: string;
 
+    @ApiProperty()
     @IsNotEmpty()
     password: string;
 }

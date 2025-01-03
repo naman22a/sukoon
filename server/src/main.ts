@@ -9,6 +9,7 @@ import * as session from 'express-session';
 import { RedisStore } from 'connect-redis';
 import { __prod__, COOKIE_NAME } from './common/constants';
 import { redis } from './common/redis';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 declare module 'express-session' {
     interface SessionData {
@@ -68,6 +69,14 @@ async function bootstrap() {
             proxy: __prod__,
         }),
     );
+
+    // Swagger
+    const swaggerConfig = new DocumentBuilder()
+        .setTitle('Sukoon API')
+        .setVersion('1.0')
+        .build();
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup('api', app, document);
 
     await app.listen(port);
 }
