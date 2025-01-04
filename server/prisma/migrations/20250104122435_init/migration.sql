@@ -22,6 +22,7 @@ CREATE TABLE "Sos" (
     "longitude" DOUBLE PRECISION NOT NULL,
     "isResolved" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Sos_pkey" PRIMARY KEY ("id")
@@ -33,6 +34,8 @@ CREATE TABLE "Tip" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "filePath" TEXT NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
