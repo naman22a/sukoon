@@ -38,12 +38,12 @@ model Sos {
 }
 
 model Tip {
-    id          Int      @id @default(autoincrement())
-    title       String
-    description String
-    filePath    String
-    latitude    Float
-    longitude   Float
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id           Int      @id @default(autoincrement())
+    title        String
+    description  String
+    mediaFileUrl String
+    latitude     Float
+    longitude    Float
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
 }

@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TipsController } from './tips.controller';
+import { TipsGateway } from './tips.gateway';
+import { TipsService } from './tips.service';
 
 @Module({
-    controllers: [TipsController],
+    providers: [TipsGateway, TipsService],
 })
 export class TipsModule {}

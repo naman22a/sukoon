@@ -1,20 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsLatitude, IsLongitude, IsNotEmpty } from 'class-validator';
+import { IsLatitude, IsLongitude, IsNotEmpty, IsUrl } from 'class-validator';
 
-export class TipsDto {
-    @ApiProperty()
-    @IsLatitude()
-    latitude: number;
-
-    @ApiProperty()
-    @IsLongitude()
-    longitude: number;
-
-    @ApiProperty()
+export class CreateTipDto {
     @IsNotEmpty()
     title: string;
 
-    @ApiProperty()
     @IsNotEmpty()
     description: string;
+
+    @IsUrl()
+    mediaFileUrl: string;
+
+    @IsLatitude()
+    latitude: number;
+
+    @IsLongitude()
+    longitude: number;
 }
