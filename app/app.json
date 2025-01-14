@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "Sukoon",
     "slug": "Sukoon",
     "version": "1.0.0",
@@ -16,11 +17,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.yourcompany.sukoon",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "location",
-          "fetch",
-          "processing"
-        ],
+        "UIBackgroundModes": ["location", "fetch", "processing"],
         "NSMotionUsageDescription": "This app needs access to motion sensors for SOS detection",
         "NSLocationWhenInUseUsageDescription": "This app needs access to location for emergency services",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs access to location for emergency services"
